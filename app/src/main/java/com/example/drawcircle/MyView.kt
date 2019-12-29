@@ -13,6 +13,7 @@ class MyView(context: Context, attributeSet: AttributeSet): View(context, attrib
     private val backingBitmap: Bitmap = Bitmap.createBitmap(1080, 2060, Bitmap.Config.ARGB_8888)
     private val offsetY: Float = 240f                       // Status Bar + Title Bar (72+168)
     private var strokeWidth: Float = 10f
+    private var radius: Float = 30f
 
     init {
         paint.style = Paint.Style.STROKE
@@ -28,6 +29,14 @@ class MyView(context: Context, attributeSet: AttributeSet): View(context, attrib
 
     fun drawColorfulCircle(cx: Float, cy: Float) {
         val canvas = Canvas(backingBitmap)
-        canvas.drawCircle(cx, cy - offsetY, 30f, paint)
+        canvas.drawCircle(cx, cy - offsetY, radius, paint)
+    }
+
+    fun changeRadius(operator: Int) {
+        when (operator) {
+            0 -> radius -= 10f
+            1 -> radius += 10f
+        }
+        if (radius < 1f) radius = 1f                        // 下限リミット処理
     }
 }
